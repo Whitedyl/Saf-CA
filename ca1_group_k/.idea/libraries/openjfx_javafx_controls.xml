@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="openjfx.javafx.controls" type="repository">
+    <properties maven-id="org.openjfx:javafx-controls:21" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21-mac-aarch64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21-mac-aarch64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21-mac-aarch64.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-controls-21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javafx-base-21-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
