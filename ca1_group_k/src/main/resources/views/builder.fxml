@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="858.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nci.security_fundamentals.MainController">
+   <children>
+      <TabPane id="homeTab" fx:id="mainTabPane" layoutY="1.0" prefHeight="624.0" prefWidth="858.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab id="homeTab" text="Home">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="pagesPanes">
+                     <children>
+                        <AnchorPane prefHeight="595.0" prefWidth="864.0" styleClass="pagesPanesFront">
+                           <children>
+                              <Button id="pwBtn" fx:id="pwBtnFx" onAction="#openPwTab" layoutX="129.0" layoutY="264.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="145.0" styleClass="homeBtns" />
+                              <Button id="imgBtn" fx:id="imageBtnFx" onAction="#openImgTab" layoutX="341.0" layoutY="264.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="145.0" styleClass="homeBtns" />
+                              <Button id="msgBtn" fx:id="msgBtnFx" onAction="#openMsgTab" layoutX="546.0" layoutY="264.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="145.0" styleClass="homeBtns" />
+                           </children>
+                        </AnchorPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+          <Tab id="pwTab" fx:id="pwTab" text="Password Manager">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="pagesPanes">
+                     <children>
+                        <AnchorPane prefHeight="597.0" prefWidth="873.0" styleClass="pagesPanesFront" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab id="imgTab" fx:id="imgTab" text="Image ">
+               <content>
+                  <AnchorPane prefHeight="245.0" prefWidth="252.0" styleClass="pagesPanes">
+                     <children>
+                        <AnchorPane prefHeight="597.0" prefWidth="866.0" styleClass="pagesPanesFront" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab id="msgTab" fx:id="msgTab" text="Messaging">
+               <content>
+                  <AnchorPane prefHeight="245.0" prefWidth="252.0" styleClass="pagesPanes">
+                     <children>
+                        <AnchorPane prefHeight="607.0" prefWidth="858.0" styleClass="pagesPanesFront" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
