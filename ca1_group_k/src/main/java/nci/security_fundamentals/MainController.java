@@ -9,6 +9,7 @@ public class MainController {
     @FXML private Tab pwTab;
     @FXML private Tab imgTab;
     @FXML private Tab msgTab;
+    @FXML private Tab homeTab;
 
     @FXML
     private void openPwTab() {
@@ -23,5 +24,10 @@ public class MainController {
     @FXML
     private void openMsgTab() {
         mainTabPane.getSelectionModel().select(msgTab);
+    }
+
+    @FXML
+    private void openHomeTab(){
+        mainTabPane.getSelectionModel().select(homeTab);
     }
 }

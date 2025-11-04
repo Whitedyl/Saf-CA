@@ -8,3 +8,21 @@
 .pagesPanesFront{
     -fx-background-color: rgba(255, 255, 255, 0.5);
 }
+#pwBtn{
+    -fx-background-image: url("/images/passwordImg.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+#imgBtn{
+    -fx-background-image: url("/images/imageImg.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+#msgBtn{
+    -fx-background-image: url("/images/msgImg.png");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+.homeBtns{
+    -fx-background-color: rgba(255, 255, 255, 0.0);
+}
