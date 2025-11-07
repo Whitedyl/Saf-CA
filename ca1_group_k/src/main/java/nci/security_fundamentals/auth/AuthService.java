@@ -2,8 +2,8 @@ package nci.security_fundamentals.auth;
 
 import org.bson.types.ObjectId;
 
-import nci.security_fundamentals.db.User_repository;
-import nci.security_fundamentals.models.User;
+import nci.security_fundamentals.server.db.User_repository;
+import nci.security_fundamentals.server.models.User;
 
 public class AuthService {
 

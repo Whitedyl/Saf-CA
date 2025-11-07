@@ -1,4 +1,4 @@
-package nci.security_fundamentals.db;
+package nci.security_fundamentals.server.db;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +14,7 @@ import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
-import nci.security_fundamentals.models.User;
+import nci.security_fundamentals.server.models.User;
 
 /**
  * User Repository - Handles all database operations for Users

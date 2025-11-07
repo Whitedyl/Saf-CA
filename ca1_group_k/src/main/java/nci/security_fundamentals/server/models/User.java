@@ -1,4 +1,4 @@
-package nci.security_fundamentals.models;
+package nci.security_fundamentals.server.models;
 
 import java.util.Date;
 

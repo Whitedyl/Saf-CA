@@ -9,7 +9,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import nci.security_fundamentals.config.EnvConfig;
-import nci.security_fundamentals.models.User;
+import nci.security_fundamentals.server.models.User;
 
 public class JwtService {
 
