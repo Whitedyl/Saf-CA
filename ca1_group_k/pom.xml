@@ -39,6 +39,13 @@
             <version>5.2.0</version>
         </dependency>
         
+        <!-- Dotenv for environment variables -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        
         <!-- SLF4J API -->
         <dependency>
             <groupId>org.slf4j</groupId>

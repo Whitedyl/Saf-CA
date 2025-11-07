@@ -1,17 +1,7 @@
 package nci.security_fundamentals;
 
-import org.bson.Document;
+import nci.security_fundamentals.auth.LoginHandler;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoException;
-import com.mongodb.ServerApi;
-import com.mongodb.ServerApiVersion;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
-
-// Image password 
 // Encrypted messaging
 // Encrypted image exchange
 // File storage?
@@ -21,24 +11,35 @@ import com.mongodb.client.MongoDatabase;
 public class Main {
 
     public static void main(String[] args) {
-    String connectionString = "mongodb+srv://andrepontde:261010@locktalk.llyfec8.mongodb.net/?appName=LockTalk";
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
-                .build();
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(connectionString))
-                .serverApi(serverApi)
-                .build();
-        // Create a new client and connect to the server
-        try (MongoClient mongoClient = MongoClients.create(settings)) {
-            try {
-                // Send a ping to confirm a successful connection
-                MongoDatabase database = mongoClient.getDatabase("admin");
-                database.runCommand(new Document("ping", 1));
-                System.out.println("Pinged your deployment. You successfully connected to MongoDB!");
-            } catch (MongoException e) {
-                e.printStackTrace();
-            }
-        }
+        System.out.println("=== Testing LoginHandler ===\n");
+        
+        // Create LoginHandler instance
+        LoginHandler loginHandler = new LoginHandler();
+        
+        // Test 1: Register a new user
+        System.out.println("Test 1: Registering new user...");
+        String registerResult = loginHandler.registerUser("testuser", "testpass123", "test@example.com");
+        System.out.println("Register result: " + registerResult);
+        System.out.println();
+        
+        // Test 2: Login with the registered user
+        System.out.println("Test 2: Logging in...");
+        String loginResult = loginHandler.login("testuser", "testpass123");
+        System.out.println("Login result (token): " + loginResult);
+        System.out.println();
+        
+        // Test 3: Check if session is active
+        System.out.println("Test 3: Checking if session is active...");
+        boolean isActive = loginHandler.isSessionActive();
+        System.out.println("Session active: " + isActive);
+        System.out.println();
+        
+        // Test 4: Try login with wrong password
+        System.out.println("Test 4: Trying wrong password...");
+        String wrongLoginResult = loginHandler.login("testuser", "wrongpassword");
+        System.out.println("Wrong login result: " + wrongLoginResult);
+        
+        System.out.println("\n=== Tests Complete ===");
     }
 }
+
