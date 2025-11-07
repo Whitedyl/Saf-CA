@@ -8,3 +8,4 @@ ca1_group_k/.env
 **/.env
 ca1_group_k/src/main/resources/config.properties
 **/config.properties
+JSONWebToken.txt

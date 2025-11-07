@@ -47,8 +47,9 @@ public class LoginHandler {
         try {
             String tokenMsg = authService.login(username, password);
             if (authService.isTokenValid(tokenMsg)) {
-                Path jwtPath = Paths.get(System.getProperty("user.home"));
+                Path jwtPath = Paths.get(System.getProperty("user.dir"));
                 jwtPath = jwtPath.resolve("JSONWebToken.txt");
+                System.out.println(jwtPath.toString());
                 
                 // Delete if exists, then create
                 if (Files.exists(jwtPath)) {
@@ -69,7 +70,7 @@ public class LoginHandler {
 
     public boolean isSessionActive(){
         try {
-            Path jwtPath = Paths.get(System.getProperty("user.home"));
+            Path jwtPath = Paths.get(System.getProperty("user.dir"));
             jwtPath = jwtPath.resolve("JSONWebToken.txt");
             
             //Check if the token file exists
