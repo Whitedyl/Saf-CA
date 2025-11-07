@@ -8,7 +8,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import nci.security_fundamentals.config.EnvConfig;
 import nci.security_fundamentals.db.User_repository;
 
 public class LoginHandler {
@@ -20,9 +20,8 @@ public class LoginHandler {
 
     public LoginHandler() {
         try {
-            Dotenv dotenv = Dotenv.load();
-            String connectionString = dotenv.get("MONGODB_CONNECTION_STRING");
-            String databaseName = dotenv.get("MONGODB_DATABASE_NAME");
+            String connectionString = EnvConfig.getRequired("MONGODB_CONNECTION_STRING");
+            String databaseName = EnvConfig.getRequired("MONGODB_DATABASE_NAME");
             
             MongoClient mongoClient = MongoClients.create(connectionString);
             database = mongoClient.getDatabase(databaseName);
@@ -31,6 +30,7 @@ public class LoginHandler {
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

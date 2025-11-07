@@ -8,7 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import nci.security_fundamentals.config.EnvConfig;
 import nci.security_fundamentals.models.User;
 
 public class JwtService {
@@ -17,8 +17,7 @@ public class JwtService {
     private final Algorithm algorithm;
 
     public JwtService() {
-        Dotenv dotenv = Dotenv.load();
-        String secretKey = dotenv.get("JWT_SECRET_KEY");
+        String secretKey = EnvConfig.getRequired("JWT_SECRET_KEY");
         this.algorithm = Algorithm.HMAC256(secretKey);
     }
 
