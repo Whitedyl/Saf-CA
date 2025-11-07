@@ -9,7 +9,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
 import nci.security_fundamentals.config.EnvConfig;
-import nci.security_fundamentals.db.User_repository;
+import nci.security_fundamentals.server.db.User_repository;
 
 public class LoginHandler {
 
