@@ -49,7 +49,7 @@ public class LoginHandler {
             if (authService.isTokenValid(tokenMsg)) {
                 Path jwtPath = Paths.get(System.getProperty("user.dir"));
                 jwtPath = jwtPath.resolve("JSONWebToken.txt");
-                System.out.println(jwtPath.toString());
+                System.out.println(jwtPath);
                 
                 // Delete if exists, then create
                 if (Files.exists(jwtPath)) {

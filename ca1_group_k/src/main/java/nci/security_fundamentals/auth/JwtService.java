@@ -38,7 +38,7 @@ public class JwtService {
 
         } catch (Exception e) {
             // Invalid Signing configuration / Couldn't convert Claims.
-            return "" + e.getMessage();
+            return e.getMessage();
         }
 
         return token;
