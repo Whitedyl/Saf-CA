@@ -1,6 +1,7 @@
 package nci.security_fundamentals;
 
 import nci.security_fundamentals.auth.LoginHandler;
+import nci.security_fundamentals.server.ChatServer;
 
 // Encrypted messaging
 // Encrypted image exchange
@@ -12,7 +13,8 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("=== Testing LoginHandler ===\n");
-        
+        ChatServer server = new ChatServer(8080);
+        server.startServer();
         // Create LoginHandler instance
         LoginHandler loginHandler = new LoginHandler();
         
