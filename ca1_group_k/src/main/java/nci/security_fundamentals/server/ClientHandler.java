@@ -45,6 +45,7 @@ public class ClientHandler implements Runnable{
 
     @Override
     public void run() {
+
         try {
             // Receive JWT token from client
             String jwtToken = (String) in.readObject();
@@ -74,10 +75,13 @@ public class ClientHandler implements Runnable{
             // Send auth success message
             out.writeObject("AUTH_SUCCESS");
             out.flush();
+            System.out.println("[SERVER] Sent AUTH_SUCCESS to " + username);
 
             // Add client to server
             server.addClient(this);
 
+            out.writeObject("[SERVER] Welcome, " + username + "! You have joined the chat.");
+            out.flush();
             // Listen for messages from this client
             while (isConnected) {
                 try {

@@ -91,22 +91,34 @@ public class JwtService {
         return decodedJWT.getId();
     }
 
-    public String getUsernameFromToken(String token){
-        DecodedJWT decodedJWT;
+    public String getUsernameFromToken(String token) {
+//        DecodedJWT decodedJWT;
+//        try {
+//            JWTVerifier verifier = JWT.require(algorithm)
+//                    // specify any specific claim validations
+//                    .withIssuer("LockTalk")
+//                    // reusable verifier instance
+//                    .build();
+//
+//            decodedJWT = verifier.verify(token);
+//
+//        } catch (JWTVerificationException exception) {
+//            return "Invalid Token: " + exception.getMessage();
+//        }
+//
+//        return decodedJWT.getId();
+//    }
         try {
             JWTVerifier verifier = JWT.require(algorithm)
-                    // specify any specific claim validations
                     .withIssuer("LockTalk")
-                    // reusable verifier instance
                     .build();
 
-            decodedJWT = verifier.verify(token);
+            DecodedJWT decodedJWT = verifier.verify(token);
+            return decodedJWT.getClaim("username").asString();
 
         } catch (JWTVerificationException exception) {
             return "Invalid Token: " + exception.getMessage();
         }
-
-        return decodedJWT.getId();
     }
 }
 

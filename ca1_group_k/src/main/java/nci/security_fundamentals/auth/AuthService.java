@@ -21,6 +21,7 @@ public class AuthService {
         // Registration logic here
         try {
             if (!(username == null && email == null && password == null)) {
+//                String encrypted = peq.encryptString(password);
                 User newUser = new User(username, email, password);
                 userRepository.createUser(newUser);
             } else {
@@ -39,7 +40,7 @@ public class AuthService {
             User currUser = userRepository.findByUsername(username);
             if (currUser != null) {
                 String psw = currUser.getPasswordHash();
-                if (psw.equals(peq.encryptString(password))) {
+                if (psw.equals(password)) { // peq.encryptString add in later when encryption of password is finished
                     String token = jwtService.getToken(currUser);
                     return token;
                 } else {
@@ -57,14 +58,53 @@ public class AuthService {
 
 
     public User authenticateWithToken(String token) {
+//        String tokenResult = jwtService.validateToken(token);
+//        User user = null;
+//        System.out.println("[DEBUG] Token validation result: " + tokenResult);
+//        if(tokenResult.equals("LockTalk")){
+//            String username = jwtService.getUsernameFromToken(token);
+//            System.out.println("[DEBUG] Looking for username in DB: " + username);
+//            user = userRepository.findByUsername(username);
+//            if (user == null) {
+//                System.out.println("[DEBUG] No user found for " + username);
+//            }
+//            else{
+//                System.out.println("[DEBUG] User found: \" "+ user.getUsername());
+//            }
+//        }else{
+//            return user;
+//        }
+//
+//        return user;
+        System.out.println("[DEBUG] Authenticating token...");
         String tokenResult = jwtService.validateToken(token);
-        User user = null;
-        if(tokenResult.equals("LockTalk")){
-            String userIdString = jwtService.getUserIdFromToken(token);
-            ObjectId userId = new ObjectId(userIdString);
-            user = userRepository.findById(userId);
-        }else{
-            return user;
+        System.out.println("[DEBUG] Token validation result: " + tokenResult);
+
+        if (tokenResult.startsWith("Invalid Token:")) {
+            System.out.println("[DEBUG] Token invalid. Rejecting.");
+            return null;
+        }
+
+        // Try username lookup first
+        String username = jwtService.getUsernameFromToken(token);
+        System.out.println("[DEBUG] Extracted username from token: " + username);
+
+        User user = userRepository.findByUsername(username);
+
+        // If not found by username, fall back to ObjectId lookup
+        if (user == null) {
+            System.out.println("[DEBUG] User not found by username, trying ObjectId lookup...");
+            try {
+                user = userRepository.findById(new org.bson.types.ObjectId(tokenResult));
+            } catch (Exception e) {
+                System.out.println("[DEBUG] Could not parse ObjectId: " + e.getMessage());
+            }
+        }
+
+        if (user == null) {
+            System.out.println("[DEBUG] Authentication failed — user not found.");
+        } else {
+            System.out.println("[DEBUG] User found: " + user.getUsername());
         }
 
         return user;

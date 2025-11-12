@@ -14,6 +14,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @Author Dylan White
@@ -40,6 +42,7 @@ public class ChatServer {
 
 
     public ChatServer(int port) {
+
         try {
             this.port = port;
             this.isRunning = false;
@@ -66,6 +69,10 @@ public class ChatServer {
             System.err.println("[ERROR] Failed to initialize ChatServer: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    public static void main(String[] args) {
+        ChatServer server = new ChatServer(DEFAULT_PORT);
+        server.startServer();
     }
 
     public void startServer() {
