@@ -1,8 +1,13 @@
 package nci.security_fundamentals.client;
 
 import nci.security_fundamentals.auth.LoginHandler;
+import nci.security_fundamentals.config.EnvConfig;
 import nci.security_fundamentals.config.HMACUtils;
+import nci.security_fundamentals.security.AesUtils;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.Base64;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -13,7 +18,7 @@ import java.util.Scanner;
  * Each message is signed with HMAC-SHA256 for integrity.
  */
 public class ChatClient {
-
+    private SecretKey aesKey;
     private String serverIp;
     private int port;
     private Socket socket;
@@ -45,7 +50,7 @@ public class ChatClient {
             String token = loginHandler.login(username, password);
             if (token != null && token.startsWith("ey")) { // JWTs start with 'eyJ'
                 System.out.println("[CLIENT] Received JWT token from server.");
-                System.out.println(token + " DeBUG");
+
                 return token;
             } else {
                 System.out.println("[CLIENT] Invalid login response: " + token);
@@ -66,34 +71,78 @@ public class ChatClient {
             out.flush();
             in = new ObjectInputStream(socket.getInputStream());
 
-            // 1️⃣ Send JWT token for authentication
+            // send jwt token for auth
             out.writeObject(token);
             out.flush();
 
-            // 2️⃣ Wait for server to confirm authentication
+            //⃣ Wait for server to confirm authentication
             String authResponse = (String) in.readObject();
             if (!"AUTH_SUCCESS".equals(authResponse)) {
                 System.out.println("[CLIENT] Authentication failed: " + authResponse);
                 socket.close();
                 return;
             }
+            try {
 
+                String base64Key = EnvConfig.getRequired("AES_SECRET_KEY");
+
+
+                byte[] decodedKey = Base64.getDecoder().decode(base64Key);
+
+
+                aesKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+
+
+                System.out.println("[DEBUG] AES key length (bytes): " + aesKey.getEncoded().length);
+            } catch (Exception e) {
+                System.out.println("[ERROR] Failed to load AES key: " + e.getMessage());
+                return; // stop if key fails to load
+            }
+            // successful auth
             System.out.println("[CLIENT] Authentication successful! You are now in chat mode.");
 
-            // 3️⃣ Start listener thread for incoming messages
-            Thread listener = new Thread(() -> {
-                try {
-                    Object input;
-                    while ((input = in.readObject()) != null) {
-                        System.out.println((String) input);
-                    }
-                } catch (Exception e) {
-                    System.out.println("[CLIENT] Disconnected from server.");
-                }
-            });
-            listener.start();
+            // Start listener thread for incoming messages
+            try {
+                Thread listener = new Thread(() -> {
+                    try {
+                        Object input;
+                        while ((input = in.readObject()) != null) {
+                            String encrypted = (String) input;
+                            try {
+                                if (encrypted.startsWith("[SERVER]")) {
+                                    System.out.println(encrypted);
+                                } else {
+                                    try {
+                                        // Split the incoming message at the first colon
+                                        String[] parts = encrypted.split(":", 2);
+                                        if (parts.length == 2) {
+                                            String sender = parts[0].trim();
+                                            String cipherText = parts[1].trim();
+                                            String decrypted = AesUtils.decrypt(aesKey, cipherText);
+                                            System.out.println("[" + sender + "] " + decrypted);
+                                        } else {
+                                            System.out.println(encrypted);
+                                        }
+                                    } catch (Exception ex) {
+                                        System.out.println(encrypted);
+                                    }
 
-            // 4️⃣ Message send loop
+                                }
+                            } catch (Exception ex) {
+                                System.out.println(encrypted);
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("[CLIENT] Disconnected from server.");
+                    }
+                });
+                listener.start();
+            } catch (Exception e) {
+                System.out.println("[CLIENT] Listener error: " + e.getMessage());
+            }
+
+
+            // message send loop
             System.out.println("You are now in chat mode. Type messages or /quit to exit.");
             while (true) {
                 String message = scanner.nextLine();
@@ -102,13 +151,18 @@ public class ChatClient {
                     break;
                 }
 
-                // Generate HMAC signature for message
-                String fullMessage = username + ": " + message;
-//                String hmac = HMACUtils.generateHMAC(fullMessage);
+                try {
+                    // Encrypt the message before sending
+                    String encrypted = AesUtils.encrypt(aesKey, message);
+                    // Generate HMAC after encryption
+                    String hmac = HMACUtils.generateHMAC(username + ": " + encrypted);
 
-                out.writeObject(message);
-//                out.writeObject(hmac);
-                out.flush();
+                    out.writeObject(encrypted);
+                    out.writeObject(hmac);
+                    out.flush();
+                } catch (Exception e) {
+                    System.out.println("[CLIENT] Encryption failed: " + e.getMessage());
+                }
             }
 
             close();
@@ -129,3 +183,4 @@ public class ChatClient {
         }
     }
 }
+

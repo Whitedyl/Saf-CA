@@ -29,7 +29,7 @@ public class HMACUtils {
     static {
         try{
             HMAC_SECRET_KEY = EnvConfig.getRequired("HMAC_SECRET_KEY");
-            System.out.println("Loaded key from .env: " + HMAC_SECRET_KEY);
+//            System.out.println("Loaded key from .env: " + HMAC_SECRET_KEY);
         } catch (Exception e){
             System.out.println("Failed to load key from .env: " + e.getMessage());
             e.printStackTrace();
