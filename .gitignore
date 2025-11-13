@@ -1,0 +1,12 @@
+target
+ca1_group_k/WHAT_I_CREATED.md
+ca1_group_k/MONGODB_LEARNING_GUIDE.md
+ca1_group_k/JWT_QUICKSTART.md
+/.idea
+
+# Environment variables and sensitive configuration files
+ca1_group_k/.env
+**/.env
+ca1_group_k/src/main/resources/config.properties
+**/config.properties
+JSONWebToken.txt
