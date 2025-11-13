@@ -1,7 +1,5 @@
 package nci.security_fundamentals.auth;
 
-import org.bson.types.ObjectId;
-
 import nci.security_fundamentals.server.db.User_repository;
 import nci.security_fundamentals.server.models.User;
 
@@ -22,7 +20,7 @@ public class AuthService {
         try {
             if (!(username == null && email == null && password == null)) {
 //                String encrypted = peq.encryptString(password);
-                User newUser = new User(username, email, password);
+                User newUser = new User(username, email, peq.encryptString(password));
                 userRepository.createUser(newUser);
             } else {
                 return "missing user information: email: " + email + ", username: " + username + ", password: " + password;
@@ -40,7 +38,7 @@ public class AuthService {
             User currUser = userRepository.findByUsername(username);
             if (currUser != null) {
                 String psw = currUser.getPasswordHash();
-                if (psw.equals(password)) { // peq.encryptString add in later when encryption of password is finished
+                if (peq.decryptString(psw).equals(password)) { // peq.encryptString add in later when encryption of password is finished
                     String token = jwtService.getToken(currUser);
                     return token;
                 } else {
