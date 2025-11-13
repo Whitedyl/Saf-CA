@@ -3,8 +3,19 @@ package nci.security_fundamentals.config;
 import io.github.cdimascio.dotenv.Dotenv;
 
 /**
- * Centralized configuration utility for loading environment variables.
- * Handles .env file loading from multiple possible locations.
+ * EnvConfig - Configuration Manager
+ * 
+ * PURPOSE: Single source of truth for all environment variables (like secrets, API keys, DB connections)
+ * WHY: Keeps sensitive data OUT of code and IN .env files (never commit .env to git!)
+ * 
+ * HOW IT FITS:
+ * - Used by LoginHandler to get MongoDB connection string
+ * - Used by JwtService to get JWT secret key for token signing
+ * - Any class needing config calls EnvConfig.get() or EnvConfig.getRequired()
+ * 
+ * USAGE:
+ *   String dbUrl = EnvConfig.getRequired("MONGODB_CONNECTION_STRING");
+ *   String apiKey = EnvConfig.get("OPTIONAL_KEY"); // returns null if not found
  */
 public class EnvConfig {
     
